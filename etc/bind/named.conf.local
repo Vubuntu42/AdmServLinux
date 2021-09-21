@@ -8,6 +8,14 @@ zone "15.168.192.in-addr.arpa" {
 
         type master;
         file "/etc/bind/db.15.168.192";
+};
 
 
+zone "2domina.lan" {
+        type master;
+        file "/etc/bind/db.2domina.lan";
+};
+zone "50.15.168.192.in-addr.arpa" {
+        type master;
+        file "/etc/bind/db.30.15.168.192";
 };
