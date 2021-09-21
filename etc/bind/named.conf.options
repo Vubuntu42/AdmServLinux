@@ -17,7 +17,7 @@ options {
 
 	dnssec-validation auto;
 	auth-nxdomain no;
-	listen-on { 127.0.0.1; 192.168.15.8; };
+	listen-on { 127.0.0.1; 192.168.15.36; };
 	listen-on-v6 { ::1; };
 	allow-query { "interna"; };
 	allow-recursion { "interna"; };
