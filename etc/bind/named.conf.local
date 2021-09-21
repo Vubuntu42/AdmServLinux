@@ -1,0 +1,13 @@
+zone "domina.lan" {
+
+        type master;
+        file "/etc/bind/db.domina.lan";
+
+};
+zone "15.168.192.in-addr.arpa" {
+
+        type master;
+        file "/etc/bind/db.15.168.192";
+
+
+};
