@@ -1,5 +1,5 @@
 ;
-; BIND reverse data file for local 192.168.15.36 net
+; BIND reverse data file for local 172.16.30.42 net
 ;
 $TTL    604800
 @       IN      SOA     ns.domina.lan. root.domina.lan. (
