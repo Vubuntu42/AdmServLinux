@@ -14,17 +14,17 @@ $TTL    604800
 
 @                       IN      NS      dominavans.lan.
 
-@                       IN      A       192.168.15.36
+@                       IN      A       172.16.30.43
 
 @                       IN      AAAA    ::1
 
-mail                    A       192.168.15.36
+mail                    A       172.16.30.43
 
-dominavans.        A       192.168.15.36
-server                  A       192.168.15.36
+dominavans.        A       172.16.30.43
+server                  A       172.16.30.43
 
-virtual                 A       192.168.15.36
+virtual                 A       172.16.30.43
 
-router                  A       192.168.15.36
-gateway                 CNAME   192.168.15.36
-gw                      CNAME   192.168.15.36
+router                  A       172.16.30.43
+gateway                 CNAME   172.16.30.43
+gw                      CNAME   172.16.30.43
