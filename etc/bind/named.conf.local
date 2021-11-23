@@ -4,5 +4,5 @@ zone "dominavans.lan" {
 };
 zone "36.15.168.192.in-addr.arpa" {
         type master;
-        file "/etc/bind/db.36.15.168.192";
+        file "/etc/bind/db.43.30.16.172,";
 };
