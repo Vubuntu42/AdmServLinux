@@ -4,6 +4,7 @@ Configuração do servidor Linux
 
 1ª etapa
 
+    
     • Baixar e Instalar Virtual box 
 
     •  Baixar Debian DVD1 iso;
@@ -18,7 +19,8 @@ Configuração do servidor Linux
 
     • ligar a VM 
 
-
+    
+    
 2ª etapa: 
 
     • logar na conta 
@@ -61,9 +63,75 @@ Configuração do servidor Linux
 
 
 
-4ª etapa: 
+4ª etapa: Fazer servidor funcionar como cache de DNS serguir a etapa 1,2,3.
 
-    • Agora para fazer um servidor DNS após fazer baixar os pacotes do bind.
-        para fazer isso abra o terminal como root
-        root#: 
+    ex: cache DNS toda a configuração passo a passo: Ex1 site: https://servidordebian.org/pt/buster/intranet/dns/cache
+   
+   •  para fazer isso abra o terminal como root
     
+        root#: sudo apt install bind9 bind9-doc dnsutils -y
+        após a instalação devemos 
+        
+        configurar o ficheiro: /etc/bind/named.conf.options
+        abra o terminal como root e execute o comando
+        root#: nano -w /etc/bind/named.conf.options
+        Ex daqui: https://github.com/huntercodecamp/_AdmServLinux/blob/main/etc/bind/named.conf.options
+        salvar e sair
+        executar no terminal como root: 
+        root#: named-checkconf
+
+        OBS: se deu tudo certo nenhum erro irá aparecer no terminal
+
+        configurar o ficheiro /etc/resolv.conf
+        abra o terminal como root e execute o comando 
+        root#: nano -w /etc/resolv.conf
+
+        ex daqui: https://github.com/huntercodecamp/_AdmServLinux/blob/main/etc/resolv.conf
+        salvar e sair 
+        executar no terminal como root 
+        root#: systemctl restart bind9
+
+        para testar agora o servidor deve conseguir entrar o ip de qualquer sitio da internet como o comando nslookup
+        execute no terminal como root
+        root#: nslookup www.debian.org
+            
+            
+    5ª Etapa: para fazer o DNS local da etapa 1 a 4 deve ter sido concluída.
+    
+        Ex o site Oficial de todos os carquivo com passo a passo: https://servidordebian.org/pt/buster/intranet/dns/server
+        
+        abra o terminal como root e edite o arquivo /etc/bind/named.conf.local:
+        root#: nano -w /etc/bind/named.conf.local
+        
+        ex daqui: https://github.com/huntercodecamp/_AdmServLinux/blob/main/etc/bind/named.conf.local
+        salve e sair
+        
+        no terminal como root execute o comando 
+        root#: sudo named-checkconf
+        
+        se não aparecer nenhum erro está ok por enquanto
+        agora deve ser criado um arquivo dentro da pasta bind com o nome do arquivo que foi colocado no arquivo anterior
+        no exemplo foi usado:
+        
+            zone "l1professor.lan" {
+                type master;
+                file "/etc/bind/db.l1professor.lan";
+            };
+            zone "30.15.168.192.in-addr.arpa" {
+                type master;
+                file "/etc/bind/db.88.0.16.172";
+            };
+            
+        temos que criar os arquivos /etc/bind/db.88.0.16.172 e /etc/bind/db.l1professor.lan
+        no caso você deverá editar como deve ser no seu servidor então os nomes deverão estar diferentes os arquivos devem estar o nome que você inventou;
+        
+        execute o comando no terminal root 
+        root#: nano -w /etc/bind/db.l1professor.lan
+        edite como no exemplo: https://github.com/huntercodecamp/_AdmServLinux/blob/main/etc/bind/db.l1professor.lan
+        salvar e sair
+        
+        agora edite o próximo arquivo: /etc/bind/db.88.0.16.172
+        edite como no exemplo https://github.com/huntercodecamp/_AdmServLinux/blob/main/etc/bind/db.88.0.16.172
+        abra o terminal root: 
+        root#: nano -w /etc/bind/db.88.0.16.172
+        
