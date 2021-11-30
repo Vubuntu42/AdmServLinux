@@ -1,13 +1,8 @@
-sudo su
-senha
-apt update &&
-apt upgrade -y &&
-apt install apache2 -y &&
-sudo apt install openssh-client -y &&
-sudo apt install openssh-server -y 
+
+apt install apache2 openssh-client apt install openssh-server -y 
 
 
-https://github.com/huntercodecamp
+https://github.com/Vubuntu42
 
 sudo nano -w /etc/ssh/ssh_config
 sudo nano -w /etc/ssh/sshd_config
@@ -17,4 +12,4 @@ service named start
 
 https://ninite.com/
 putty
-dominavans@dominavans
+dominavans
