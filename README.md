@@ -4,40 +4,72 @@ Configuração do servidor Linux
 
 1ª etapa
 
+• Baixar e Instalar Virtual box 
+
+•  Baixar Debian DVD1 iso;
+
+•  criar máquina com 1256 mb 
+
+    ○ hd tipo vdi   
     
-    • Baixar e Instalar Virtual box 
+    ○ 25gb HD 
+    
+    iniciar  VM  e instalar o Debian DVD1 iso
 
-    •  Baixar Debian DVD1 iso;
-    •  criar máquina com 1256 mb 
-        ○ hd tipo vdi   
-        ○ 25gb HD 
-        iniciar  VM  e instalar o Debian DVD1 iso
+• Desligar a VM 
 
-    • Desligar a VM 
+• Ir para as configurações da VM na parte de rede e mudar para placa em modo bridge depois no menu a baixo avançado abra a lista suspensa e o nomo promíscuo mudar na lista suspensa para permitir tudo.
 
-    • Ir para as configurações da VM na parte de rede e mudar para placa em modo bridge depois no menu a baixo avançado abra a lista suspensa e o nomo promíscuo mudar na lista suspensa para permitir tudo.
-
-    • ligar a VM 
+• ligar a VM 
 
     
+2ª etapa:
+edite o arquivo /etc/apt/sources.list   
+
+para editar abra o terminal como root#: 
+
+root#: nano -w /etc/apt/sources.list
+
     
-2ª etapa: 
+    deb http://deb.debian.org/debian bullseye main
+    deb-src http://deb.debian.org/debian bullseye main
 
-    • logar na conta 
+    deb http://deb.debian.org/debian-security/ bullseye-security main
+    deb-src http://deb.debian.org/debian-security/ bullseye-security main
 
-    • abrir terminal e logar como root 
+    deb http://deb.debian.org/debian bullseye-updates main
+    deb-src http://deb.debian.org/debian bullseye-updates main
+    
+salvar e sair
 
-    • para configuração de ip estático você deve criar o Arquivo de configuração de rede com nome da interface de rede com extensão .config na pasta /etc/network.interfaces.d/
-    ex: sudo nano -w /etc/network/interfaces/enp0s3.config
+abra o terminal como root e digite o comando 
+    
+    root#: apt update -y && apt upgrade -y
+    
+    
+3ª etapa: 
 
-    link do exemplo1 aqui no repositório: https://github.com/huntercodecamp/_AdmServLinux/blob/main/etc/network/interfaces.d/enp0s3.config
-    link do exemplo2 do site oficial do servidor debian: https://servidordebian.org/pt/buster/config/network/static_ip
+• logar na conta 
 
-    para conferir se configurou corretamente tente o comando no terminal root# : systemctl restart networking 
+• abrir terminal e logar como root 
 
-    se não aparecer nenhum erro está ok. 
-    Obs: em alguns casos é preciso reiniciar para funcionar. 
-    então se como o comando não funcionou reinicie e teste no terminal 
+• para configuração de ip estático você deve criar o Arquivo de configuração de rede com nome da interface de rede com extensão .config na pasta /etc/network.interfaces.d/
+ex: sudo nano -w /etc/network/interfaces.d/enp0s3.config
+
+link do exemplo1 aqui no repositório: https://github.com/huntercodecamp/_AdmServLinux/blob/main/etc/network/interfaces.d/enp0s3.config
+link do exemplo2 do site oficial do servidor debian: https://servidordebian.org/pt/buster/config/network/static_ip
+
+    # Static IP address
+    auto enp0s3
+    iface enp0s3 inet static
+        address 172.16.0.88/16
+        gateway 172.16.0.1
+
+para conferir se configurou corretamente tente o comando no terminal root# : systemctl restart networking 
+
+se não aparecer nenhum erro está ok. 
+Obs: em alguns casos é preciso reiniciar para funcionar. 
+então se como o comando não funcionou reinicie e teste no terminal 
 
     • abra o terminal novamente e digite root#: ip -4 a
 
@@ -45,7 +77,7 @@ Configuração do servidor Linux
     
 
 
-3ª etapa: 
+4ª etapa: 
 
     • agora para a configuração ficar mais fácil dependendo da configuração do servidor é recomendado ser instalado primeiro o servidor ssh para poder acessar remotamente en outra máquina com configurações melhores para se trabalhar vendo a documentação.
 
@@ -63,7 +95,7 @@ Configuração do servidor Linux
 
 
 
-4ª etapa: Fazer servidor funcionar como cache de DNS serguir a etapa 1,2,3.
+5ª etapa: Fazer servidor funcionar como cache de DNS serguir a etapa 1,2,3.
 
     ex: cache DNS toda a configuração passo a passo: Ex1 site: https://servidordebian.org/pt/buster/intranet/dns/cache
    
@@ -96,7 +128,7 @@ Configuração do servidor Linux
         root#: nslookup www.debian.org
             
             
-    5ª Etapa: para fazer o DNS local da etapa 1 a 4 deve ter sido concluída.
+    6ª Etapa: para fazer o DNS local da etapa 1 a 4 deve ter sido concluída.
     
         Ex o site Oficial de todos os carquivo com passo a passo: https://servidordebian.org/pt/buster/intranet/dns/server
         
@@ -113,25 +145,24 @@ Configuração do servidor Linux
         agora deve ser criado um arquivo dentro da pasta bind com o nome do arquivo que foi colocado no arquivo anterior
         no exemplo foi usado:
         
-            zone "l1professor.lan" {
+            zone "dominavans.lan" {
                 type master;
-                file "/etc/bind/db.l1professor.lan";
+                file "/etc/bind/db.dominavans.lan";
             };
             zone "30.15.168.192.in-addr.arpa" {
                 type master;
-                file "/etc/bind/db.88.0.16.172";
+                file "/etc/bind/db.43.0.16.172";
             };
             
-        temos que criar os arquivos /etc/bind/db.88.0.16.172 e /etc/bind/db.l1professor.lan
+        temos que criar os arquivos /etc/bind/db.43.0.16.172 e /etc/bind/db.dominavans.lan
         no caso você deverá editar como deve ser no seu servidor então os nomes deverão estar diferentes os arquivos devem estar o nome que você inventou;
         
         execute o comando no terminal root 
-        root#: nano -w /etc/bind/db.l1professor.lan
-        edite como no exemplo: https://github.com/huntercodecamp/_AdmServLinux/blob/main/etc/bind/db.l1professor.lan
+        root#: nano -w /etc/bind/db.dominavans.lan
+        edite como no exemplo: https://github.com/Vubuntu42/AdmServLinux/blob/main/etc/bind/db.dominavans.lan
         salvar e sair
         
         agora edite o próximo arquivo: /etc/bind/db.88.0.16.172
-        edite como no exemplo https://github.com/huntercodecamp/_AdmServLinux/blob/main/etc/bind/db.88.0.16.172
+        edite como no exemplo https://github.com/Vubuntu42/AdmServLinux/blob/main/etc/bind/db.43.0.16.172
         abra o terminal root: 
-        root#: nano -w /etc/bind/db.88.0.16.172
-        
+        root#: nano -w /etc/bind/db.43.0.16.172
